@@ -2,8 +2,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/pages/index.tsx',
+    index: './src/pages/home.tsx',
     playground: './src/pages/playground.tsx',
+    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
+    'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
   },
   output: {
     filename: '[name].bundle.js'

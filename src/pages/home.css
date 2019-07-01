@@ -1,0 +1,11 @@
+.pageContent {
+  margin: 30px;
+}
+
+.descriptionText {
+  max-width: 60em;
+}
+
+.goButton:not(:first-child) {
+  margin-left: 15px;
+}

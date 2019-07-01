@@ -1,0 +1,32 @@
+.pageContent {
+  margin: 15px 30px 0 30px;
+}
+
+.topPart {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+}
+
+.shapesPane {
+  flex: 1 1 50%;
+}
+
+.infoBoxPane {
+  flex: 1 1 50%;
+}
+
+.operationTabs {
+  margin-top: 30px;
+}
+
+.twoPanes {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.paneControls {
+  margin: 15px;
+  white-space: nowrap;
+}
