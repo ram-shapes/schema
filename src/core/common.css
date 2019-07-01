@@ -1,0 +1,9 @@
+html, body, :global(#app) {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+:global(#app) {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        shortName: "ram-shapes",
+        subtitle: "RAM shapes: declarative RDF ↔ ADT mapping",
+        editors: [{
+          name: "Alexey Morozov",
+          url: "https://github.com/AlexeyMz",
+        }],
+        github: "https://github.com/ram-shapes/ram-shapes.github.io",
+        localBiblio: {
+          "rdfjs": {
+            title: "RDF/JS: Data model specification",
+            href: "http://rdf.js.org/data-model-spec/",
+            status: "CG-DRAFT",
+            publisher: "W3C",
+          },
+          "rdfjs-dataset": {
+            title: "RDF/JS: Dataset specification 1.0",
+            href: "https://rdf.js.org/dataset-spec/",
+            status: "CG-FINAL",
+            publisher: "W3C",
+          }
+        },
+      };
+    </script>
+    <title>RAM shapes: declarative RDF ↔ ADT mapping</title>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        RAM (RDF ADT Mapping) is a type construction language, specification and an
+        implementation of mapping operations between RDF graphs and structured data types.
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>
+        Changes to this document may be tracked at
+        <a href='https://github.com/ram-shapes/ram-shapes.github.io'>
+          https://github.com/ram-shapes/ram-shapes.github.io
+        </a>.
+      </p>
+    </section>
+    <section>
+      <h2>Basic definitions</h2>
+      <p>
+        Types <dfn>string</dfn>, <dfn>boolean</dfn> have the common meaning.
+      </p>
+      <p>
+        This specification uses the following RDF types defined in [[rdfjs]] spec:
+        <dfn data-cite="rdfjs#dom-term">Term</dfn>,
+        <dfn data-cite="rdfjs#dom-namednode">NamedNode</dfn>,
+        <dfn data-cite="rdfjs#dom-blanknode">BlankNode</dfn>,
+        <dfn data-cite="rdfjs#dom-literal">Literal</dfn>,
+        <dfn data-cite="rdfjs#dom-quad">Quad</dfn>.
+      </p>
+      <p>
+        Also the specification references the following types from [[rdfjs-dataset]]:
+        <dfn data-cite="rdfjs-dataset#dom-dataset">Dataset</dfn>.
+      </p>
+    </section>
+    <section data-dfn-for="Shape" data-link-for="Shape">
+      <h2><dfn>Shape</dfn> type constructors</h2>
+      <pre class="idl">
+      typedef (
+        ResourceShape
+        or LiteralShape
+        or ObjectShape
+        or UnionShape
+        or SetShape
+        or OptionalShape
+        or ListShape
+        or MapShape
+      ) Shape;
+      </pre>
+      <section data-dfn-for="ShapeBase" data-link-for="ShapeBase">
+        <pre class="idl">
+          typedef (NamedNode or BlankNode) ShapeID;
+          interface ShapeBase {
+            readonly attribute ShapeID id;
+          };
+        </pre>
+      </section>
+      <section data-dfn-for="ResourceShape" data-link-for="ResourceShape">
+        <h3><dfn>ResourceShape</dfn> type</h3>
+        <p>
+          <a>ResourceShape</a> describes an RDF resource term, which is either an IRI or a blank node:
+        </p>
+        <pre class="idl">
+        interface ResourceShape : ShapeBase {
+          readonly attribute string type; /* = "resource" */
+          readonly attribute (NamedNode or BlankNode)? value;
+          readonly attribute Vocabulary? vocabulary;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="LiteralShape" data-link-for="LiteralShape">
+        <h3><dfn>LiteralShape</dfn> type</h3>
+        <p>
+          <a>LiteralShape</a> describes an RDF literal term with its specified datatype and language
+          (if the datatype is <code>rdf:langString</code>):
+        </p>
+        <pre class="idl">
+        interface LiteralShape : ShapeBase {
+          readonly attribute string type; /* = "literal" */
+          readonly attribute NamedNode? datatype;
+          readonly attribute string? language;
+          readonly attribute Literal? value;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="ObjectShape" data-link-for="ObjectShape">
+        <h3><dfn>ObjectShape</dfn> type</h3>
+        <p>
+          <a>ObjectShape</a> describes a product type of heterogeneous types accessible through
+          named properties. Both <dfn>typeProperties</dfn> and <dfn>properties</dfn> define
+          properties for a shape and the difference is when a candidate node must match given
+          object shape if and only if all <a>typeProperties</a> matches, which allows to
+          quickly filter a set of candidate nodes by scanning only against <a>typeProperties</a>.
+        </p>
+        <pre class="idl">
+        interface ObjectShape : ShapeBase {
+          readonly attribute string type; /* = "object" */
+          getter sequence&lt;ObjectProperty&gt; typeProperties();
+          getter sequence&lt;ObjectProperty&gt; properties();
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="ObjectProperty" data-link-for="ObjectProperty">
+        <h3><dfn>ObjectProperty</dfn> interface</h3>
+        <p>
+          <a>ObjectProperty</a> describes a named property in a record type.
+          It is specified by its <dfn>name</dfn> string, <dfn data-lt="path">property path</dfn> and
+          <dfn data-lt="valueShape">value shape</dfn>. A property with zero-length path allows to embed
+          a different representation of the same subject, e.g. the subject IRI itself.
+        </p>
+        <pre class="idl">
+        interface ObjectProperty {
+          readonly attribute string name;
+          readonly attribute PathSequence path;
+          readonly attribute ShapeID valueShape;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="UnionShape" data-link-for="UnionShape">
+        <h3><dfn>UnionShape</dfn> type</h3>
+        <p>
+          <a>UnionShape</a> describes a sum (coproduct) type of several types.
+          The <dfn>variants</dfn> are unordered, which means matching operations
+          may produce results in arbitrary order when the same candidate node
+          matches multiple variant types.
+        </p>
+        <pre class="idl">
+        interface UnionShape : ShapeBase {
+          readonly attribute string type; /* = "union" */
+          getter sequence&lt;ShapeID&gt; variants();
+        };
+        </pre>
+      </section>
+    </section>
+  </body>
+</html>

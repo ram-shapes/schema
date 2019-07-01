@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import { Tabs, Tab, Button, Form } from 'react-bootstrap';
+import { Alert, Tabs, Tab, Button, Form } from 'react-bootstrap';
 import * as Ram from 'ram-shapes';
 import * as N3 from 'n3';
 import * as SparqlJs from 'sparqljs';
@@ -17,7 +17,7 @@ const DEFAULT_EXAMPLE = 'selectors';
 const FRAME_RESULT_PLACEHLDER = '{ _: "Press \'Frame\' to perform frame() on specified graph" }';
 const FLATTEN_RESULT_PLACEHOLDER = '_:b _:p "Press \'Flatten\' to perform flatten() on specified JSON"';
 const GENERATE_QUERY_RESULT_PLACEHOLDER =
-  'SELECT * WHERE { ?s ?p "Press \'Generate CONSTRUCT query\' to generate query for specified shapes" }';
+  '# Press "Generate CONSTRUCT query" to generate query for specified shapes';
 
 function PlaygroundPage() {
   const shapesEditorRef = useRef<CodeEditor>(null);
@@ -33,7 +33,7 @@ function PlaygroundPage() {
   function addError(message: string, reason?: { message: string }) {
     let error = message;
     if (reason) {
-      console.error(reason);
+      console.warn(reason);
       error += '\n' + reason.message;
     }
     setErrors(errors => ([...errors, error]));
@@ -227,10 +227,16 @@ function PlaygroundPage() {
           </div>
         </div>
         <div className={styles.infoBox}>
-          {errors.length > 0 ? <div>Errors:</div> : null}
-          <ul className={styles.errorList}>
-            {errors.map((error, i) => <li key={i} className={styles.errorMessage}>{error}</li>)}
-          </ul>
+          {errors.length > 0 ? (
+            <Alert variant='danger'
+              className={styles.infoBox}
+              onClose={() => setErrors([])}
+              dismissible={true}>
+              <ul className={styles.errorList}>
+                {errors.map((error, i) => <li key={i} className={styles.errorMessage}>{error}</li>)}
+              </ul>
+            </Alert>
+          ) : null}
         </div>
       </div>
     </>

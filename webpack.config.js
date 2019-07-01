@@ -34,7 +34,12 @@ module.exports = {
           {loader: 'style-loader'},
           {
             loader: 'css-loader',
-            options: {modules: true},
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: 'ram-[name]__[local]--[hash:base64:5]',
+              }
+            }
           },
         ]
       },
@@ -74,6 +79,12 @@ module.exports = {
       chunks: ['playground'],
       template: 'src/pages/template.hbs',
       filename: 'playground.html',
+    }),
+    new HtmlWebpackPlugin({
+      title: 'RAM shapes - Playground',
+      chunks: [],
+      template: 'src/pages/spec.hbs',
+      filename: 'spec.html',
     }),
   ]
 };

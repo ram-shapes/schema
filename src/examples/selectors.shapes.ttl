@@ -25,7 +25,8 @@ ex:Annotation a :ObjectShape;
         :shape [ a :OptionalShape; :item ex:Selector ]
     ].
 
-ex:Selector a :UnionShape; :variant ex:Point, ex:Path.
+ex:Selector a :UnionShape;
+    :variant ex:Point, ex:Path.
 
 ex:Point a :ObjectShape;
     :typeProperty [
