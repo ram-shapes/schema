@@ -56,11 +56,15 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.ttl$/,
+        use: {loader: 'raw-loader'}
+      },
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'RAM shapes - Main',
+      title: 'RAM shapes - Home',
       chunks: ['index'],
       template: 'src/pages/template.hbs',
       filename: 'index.html',

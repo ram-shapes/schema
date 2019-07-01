@@ -1,0 +1,9 @@
+{
+  "type": "http://example.com/schema/Annotation",
+  "id": "http://example.com/data/anno1",
+  "start": {
+    "type": "http://example.com/schema/Point",
+    "position": 42
+  },
+  "end": ["1", "2"]
+}
