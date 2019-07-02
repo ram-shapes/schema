@@ -1,7 +1,7 @@
 import React from 'react';
-import * as Monaco from 'monaco-editor';
 
 import { classNames } from '../util/components-util';
+import * as Monaco from './monaco';
 
 import * as styles from './code-editor.css';
 

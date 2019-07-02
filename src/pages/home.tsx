@@ -27,8 +27,8 @@ function HomePage() {
           <p>
             <Button variant='primary'
               className={styles.goButton}
-              disabled={true}>
-              Read paper (coming soon)
+              href={getLinkHref(AppPage.Spec, {base: '/'})}>
+              Read specification draft
             </Button>
             <Button variant='outline-info'
               className={styles.goButton}

@@ -8,11 +8,26 @@
         specStatus: "unofficial",
         shortName: "ram-shapes",
         subtitle: "RAM shapes: declarative RDF ↔ ADT mapping",
+        edDraftURI: "https://github.com/ram-shapes/ram-shapes.github.io/blob/develop/src/pages/spec.hbs",
         editors: [{
           name: "Alexey Morozov",
           url: "https://github.com/AlexeyMz",
+          company: "ITMO University - ISST Laboratory",
+          companyURL: "http://isst.ifmo.ru/",
         }],
-        github: "https://github.com/ram-shapes/ram-shapes.github.io",
+        authors: [{
+          name: "Alexey Morozov",
+          url: "https://github.com/AlexeyMz",
+          company: "ITMO University - ISST Laboratory",
+          companyURL: "http://isst.ifmo.ru/",
+        }],
+        otherLinks: [{
+          key: "Version control",
+          data: [{
+            value: "Github Repository",
+            href: "https://github.com/ram-shapes/ram-shapes.github.io"
+          }]
+        }],
         localBiblio: {
           "rdfjs": {
             title: "RDF/JS: Data model specification",
@@ -25,7 +40,15 @@
             href: "https://rdf.js.org/dataset-spec/",
             status: "CG-FINAL",
             publisher: "W3C",
-          }
+          },
+          "XSPARQL": {
+            title: "XSPARQL: Traveling between the XML and RDF worlds–and avoiding the XSLT pilgrimage",
+            href: "https://link.springer.com/chapter/10.1007/978-3-540-68234-9_33",
+          },
+          "SPARQL.js": {
+            title: "SPARQL.js – A SPARQL 1.1 parser for JavaScript",
+            href: "https://github.com/RubenVerborgh/SPARQL.js",
+          },
         },
       };
     </script>
@@ -47,12 +70,17 @@
       </p>
     </section>
     <section>
-      <h2>Basic definitions</h2>
+      <h2>External definitions</h2>
       <p>
-        Types <dfn>string</dfn>, <dfn>boolean</dfn> have the common meaning.
+        Commonly used types and values from ECMAScript include
+          <dfn data-lt='DOMString'>string</dfn>,
+          <dfn>boolean</dfn>,
+          <dfn>null</dfn> (and <dfn data-lt="nullType">null type</dfn>),
+          <dfn>undefined</dfn>,
+          <dfn>unknown</dfn>.
       </p>
       <p>
-        This specification uses the following RDF types defined in [[rdfjs]] spec:
+        The specification references the following RDF types defined in [[!rdfjs]] spec:
         <dfn data-cite="rdfjs#dom-term">Term</dfn>,
         <dfn data-cite="rdfjs#dom-namednode">NamedNode</dfn>,
         <dfn data-cite="rdfjs#dom-blanknode">BlankNode</dfn>,
@@ -60,20 +88,25 @@
         <dfn data-cite="rdfjs#dom-quad">Quad</dfn>.
       </p>
       <p>
-        Also the specification references the following types from [[rdfjs-dataset]]:
+        The specification references the following types from [[!rdfjs-dataset]]:
         <dfn data-cite="rdfjs-dataset#dom-dataset">Dataset</dfn>.
+      </p>
+      <p>
+        The specification references the following types from [[!SPARQL.js]] query AST:
+        <dfn>ConstructQuery</dfn>.
       </p>
     </section>
     <section data-dfn-for="Shape" data-link-for="Shape">
       <h2><dfn>Shape</dfn> type constructors</h2>
+      The set of defined types forms a type construction language with RDF-based atomic terms and ADTs (Algebraic Data Types).
       <pre class="idl">
       typedef (
         ResourceShape
         or LiteralShape
         or ObjectShape
         or UnionShape
-        or SetShape
         or OptionalShape
+        or SetShape
         or ListShape
         or MapShape
       ) Shape;
@@ -93,7 +126,8 @@
         </p>
         <pre class="idl">
         interface ResourceShape : ShapeBase {
-          readonly attribute string type; /* = "resource" */
+          /** type == "resource" */
+          readonly attribute string type;
           readonly attribute (NamedNode or BlankNode)? value;
           readonly attribute Vocabulary? vocabulary;
         };
@@ -102,12 +136,14 @@
       <section data-dfn-for="LiteralShape" data-link-for="LiteralShape">
         <h3><dfn>LiteralShape</dfn> type</h3>
         <p>
-          <a>LiteralShape</a> describes an RDF literal term with its specified datatype and language
-          (if the datatype is <code>rdf:langString</code>):
+          <a>LiteralShape</a> describes an RDF literal term with its specified <dfn>datatype</dfn>,
+          <dfn>language</dfn> (if the <a>datatype</a> is <code>rdf:langString</code>) and
+          <dfn>value</dfn>:
         </p>
         <pre class="idl">
         interface LiteralShape : ShapeBase {
-          readonly attribute string type; /* = "literal" */
+          /** type == "literal" */
+          readonly attribute string type;
           readonly attribute NamedNode? datatype;
           readonly attribute string? language;
           readonly attribute Literal? value;
@@ -125,9 +161,121 @@
         </p>
         <pre class="idl">
         interface ObjectShape : ShapeBase {
-          readonly attribute string type; /* = "object" */
+          /** type == "object" */
+          readonly attribute string type;
           getter sequence&lt;ObjectProperty&gt; typeProperties();
           getter sequence&lt;ObjectProperty&gt; properties();
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="UnionShape" data-link-for="UnionShape">
+        <h3><dfn>UnionShape</dfn> type</h3>
+        <p>
+          <a>UnionShape</a> describes a sum (coproduct) type of several types.
+          The <dfn>variants</dfn> are unordered, which means matching operations
+          may produce results in arbitrary order when the same candidate node
+          matches multiple variant types.
+        </p>
+        <pre class="idl">
+        interface UnionShape : ShapeBase {
+          /** type == "union" */
+          readonly attribute string type;
+          getter sequence&lt;ShapeID&gt; variants();
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="OptionalShape" data-link-for="OptionalShape">
+        <h3><dfn>OptionalShape</dfn> type</h3>
+        <p>
+          <a>OptionalShape</a> describes a sum type of an empty unit type and a single type
+          <dfn>itemShape</dfn>.
+        </p>
+        <p>
+          Although this type could also be represented as
+          a <a>UnionShape</a> by introducing a <code>Nothing</code> unit type like
+          <a>null</a> in C-like languages, the optional type more closely resembles
+          the semantics of programming languages with either no explicit <code>nothing</code>
+          type or multiple such types instead (e.g. <a>null</a> and <a>undefined</a>
+          in ECMAScript).
+        </p>
+        <pre class="idl">
+        interface OptionalShape : ShapeBase {
+          /** type == "optional" */
+          readonly attribute string type;
+          readonly attribute ShapeID itemShape;
+          readonly attribute nullType? emptyValue;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="SetShape" data-link-for="SetShape">
+        <h3><dfn>SetShape</dfn> type</h3>
+        <p>
+          <a>SetShape</a> describes an unordered set of a single type <dfn>itemShape</dfn>.
+        </p>
+        <pre class="idl">
+        interface SetShape : ShapeBase {
+          /** type == "set" */
+          readonly attribute string type;
+          readonly attribute ShapeID itemShape;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="ListShape" data-link-for="ListShape">
+        <h3><dfn>ListShape</dfn> type</h3>
+        <p>
+          <a>ListShape</a> describes an ordered set (<a data-cite="WebIDL#idl-sequence">sequence</a>)
+          of a single type <dfn>itemShape</dfn>.
+        </p>
+        <p>
+          By default a <a>ListShape</a> represents RDF list structures, however it is possible to
+          override <dfn>headPath</dfn>, or <dfn>tailPath</dfn> property paths and <dfn>nil</dfn> term
+          to describe other kinds of ordered structures.
+        </p>
+        <pre class="idl">
+        interface ListShape : ShapeBase {
+          /** type == "list" */
+          readonly attribute string type;
+          readonly attribute ShapeID itemShape;
+          readonly attribute PathSequence? headPath;
+          readonly attribute PathSequence? tailPath;
+          readonly attribute NamedNode? nil;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="MapShape" data-link-for="MapShape">
+        <h3><dfn>MapShape</dfn> type</h3>
+        <p>
+          <a>MapShape</a> describes an unordered set (<a data-cite="WebIDL#idl-record">record</a>) of items
+          with type <dfn>itemShape</dfn> indexed by a <dfn>key</dfn> and (optionally) <dfn>value</dfn>.
+        </p>
+        <p>
+          Any nested shape value, datatype or language may be chosen as the key. When <a>MapShape</a> includes
+          a nested map value with the same <a>key</a>, the key always refers to the innermost map shape.
+          A <a>key</a> shape may be limited to non-composite types depending on the implementation.
+        </p>
+        <pre class="idl">
+        interface MapShape : ShapeBase {
+          /** type == "map" */
+          readonly attribute string type;
+          readonly attribute ShapeReference key;
+          readonly attribute ShapeReference? value;
+          readonly attribute ShapeID itemShape;
+        };
+        </pre>
+      </section>
+    </section>
+    <section>
+      <h2>Utility interfaces</h2>
+      <section data-dfn-for="Vocabulary" data-link-for="Vocabulary">
+        <h3><dfn>Vocabulary</dfn> interface</h3>
+        <p>
+          <a>Vocabulary</a> describes a mapping between <a>NamedNode</a> terms and <a>string</a> keys.
+          The mapping allows to refer to RDF resources by short names in
+          by matching against <dfn>terms</dfn> dictionary.
+        </p>
+        <pre class="idl">
+        interface Vocabulary {
+          getter record&lt;DOMString, NamedNode&gt; terms();
         };
         </pre>
       </section>
@@ -147,20 +295,129 @@
         };
         </pre>
       </section>
-      <section data-dfn-for="UnionShape" data-link-for="UnionShape">
-        <h3><dfn>UnionShape</dfn> type</h3>
+      <section data-dfn-for="PathSequence" data-link-for="PathSequence">
+        <h3><dfn>PathSequence</dfn> interface</h3>
         <p>
-          <a>UnionShape</a> describes a sum (coproduct) type of several types.
-          The <dfn>variants</dfn> are unordered, which means matching operations
-          may produce results in arbitrary order when the same candidate node
-          matches multiple variant types.
+          <a>PathSequence</a> describes a property path in RDF graph.
         </p>
         <pre class="idl">
-        interface UnionShape : ShapeBase {
-          readonly attribute string type; /* = "union" */
-          getter sequence&lt;ShapeID&gt; variants();
+        typedef sequence&lt;PathElement&gt; PathSequence;
+        typedef (PathExpression or PathSegment) PathElement;
+        interface PathExpression {
+          /** operator in ("|" or "^" or "*" or "+" or "?" or "!") */
+          readonly attribute string operator;
+          readonly attribute PathSequence path;
+        };
+        interface PathSegment {
+          readonly attribute NamedNode predicate;
         };
         </pre>
+      </section>
+      <section data-dfn-for="ShapeReference" data-link-for="ShapeReference">
+        <h3><dfn>ShapeReference</dfn> interface</h3>
+        <p>
+          <a>ShapeReference</a> describes a reference to RDF candidate matched by
+          <dfn>target</dfn> <a>Shape</a>.
+          A reference may target whole <a>Term</a> value or a specific <dfn>part</dfn> such as
+          language or datatype of a <a>Literal</a>.
+        </p>
+        <pre class="idl">
+        interface ShapeReference {
+          readonly attribute ShapeID target;
+          /** part in ("value" or "datatype" or "language") */
+          readonly attribute string? part;
+        };
+        </pre>
+      </section>
+      <section data-dfn-for="ValueMapper" data-link-for="ValueMapper">
+        <h3><dfn>ValueMapper</dfn> interface</h3>
+        <p>
+          <a>ValueMapper</a> describes two-way mapping between atomic RDF terms and "leaf"
+          data structures such as primitive types (<code>number</code>, <code>string</code>,
+          <code>DataTime</code>, etc).
+        </p>
+        <pre class="idl">
+        interface ValueMapper {
+          unknown fromRdf(unknown value, Shape shape);
+          unknown toRdf(unknown value, Shape shape);
+        };
+        </pre>
+      </section>
+    </section>
+    <section>
+      <h2>Workflow operations</h2>
+      The specification of operations on the described data types includes the following methods:
+      <pre class="idl">
+      interface RamOperations {
+        sequence&lt;unknown&gt; frame(FrameParams params);
+        sequence&lt;Quad&gt; flatten(FlattenParams params);
+        ConstructQuery generateQuery(GenerateQueryParams params);
+        /* TODO: ValidationReport validate(ValidateParams params); */
+      };
+      </pre>
+      <section data-dfn-for="FrameParams" data-link-for="FrameParams">
+        <h3><dfn data-lt="RamOperations.frame()">frame()</dfn> operation</h3>
+        <p>
+          <a data-lt='RamOperations.frame()'>frame()</a> matches RDF <dfn>dataset</dfn> into
+          <dfn>shapes</dfn> from enty point <dfn>rootShape</dfn> and forms data structures
+          corresponding to these shapes.
+          This operation is usually referred to as <em>RDF lowering</em> (see [[!!XSPARQL]]).
+        </p>
+        <pre class="idl">
+        dictionary FrameParams {
+          ShapeID rootShape;
+          sequence&lt;Shape&gt; shapes;
+          Dataset dataset;
+          ValueMapper? mapper;
+        };
+        </pre>
+        <p>
+          Returns: <code class="idl">sequence&lt;unknown&gt;</code> &mdash; all found matches
+          where each one is an instance of <a>rootShape</a>.
+        </p>
+      </section>
+      <section data-dfn-for="FlattenParams" data-link-for="FlattenParams">
+        <h3><dfn data-lt="RamOperations.flatten()">flatten()</dfn> operation</h3>
+        <p>
+          <a data-lt='RamOperations.flatten()'>flatten()</a> generates
+          <a data-lt="Dataset">RDF dataset</a> from <dfn>value</dfn> which must be an instance
+          of <dfn>rootShape</dfn> entry point and contain valus described by <dfn>shapes</dfn>.
+          This operation is usually referred to as <em>RDF lifting</em> (see [[XSPARQL]]).
+        </p>
+        <pre class="idl">
+        dictionary FlattenParams {
+          ShapeID rootShape;
+          sequence&lt;Shape&gt; shapes;
+          unknown value;
+          ValueMapper? mapper;
+        };
+        </pre>
+        <p>
+          Returns: <code class="idl">sequence&lt;Quad&gt;</code> &mdash; generated RDF dataset
+          content which may contain duplicate quads.
+        </p>
+      </section>
+      <section data-dfn-for="GenerateQueryParams" data-link-for="GenerateQueryParams">
+        <h3><dfn data-lt="RamOperations.generateQuery()">generateQuery()</dfn> operation</h3>
+        <p>
+          <a data-lt='RamOperations.generateQuery()'>generateQuery()</a> generates SPARQL
+          <a data-cite='sparql11-query#construct'>CONSTRUCT query</a> to fetch a subset
+          of RDF graph data necessary to match given <dfn>shapes</dfn> starting from entry
+          point <dfn>rootShape</dfn>.
+        </p>
+        <pre class="idl">
+        dictionary GenerateQueryParams {
+          ShapeID rootShape;
+          sequence&lt;Shape&gt; shapes;
+          NamedNode? base;
+          record&lt;DOMString, string&gt;? prefixes;
+        };
+        </pre>
+        <p>
+          Returns: <code class="idl">ConstructQuery</code> &mdash; generated query in [[SPARQL.js]]
+          query AST representation with specified <dfn>base</dfn> and <dfn>prefixes</dfn> for
+          <a data-cite='sparql11-query#syntaxTerms'>graph terms</a>.
+        </p>
       </section>
     </section>
   </body>
