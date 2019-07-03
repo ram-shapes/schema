@@ -1,4 +1,4 @@
-export type ExampleName = 'none' | 'selectors' | 'wikidata';
+export type ExampleName = 'none' | 'selectors' | 'wikidata' | 'iiif';
 
 export interface Example {
   readonly shapes: string;
@@ -36,4 +36,10 @@ EXAMPLES.set('wikidata', {
   shapes: require('./wikidata.shapes.ttl').default,
   graph: require('./wikidata.graph.ttl').default,
   framed: stringifyFramed(require('./wikidata.framed.json')),
+});
+
+EXAMPLES.set('iiif', {
+  shapes: require('./iiif.shapes.ttl').default,
+  graph: require('./iiif.graph.ttl').default,
+  framed: stringifyFramed(require('./iiif.framed.json')),
 });

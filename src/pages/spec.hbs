@@ -112,10 +112,16 @@
       ) Shape;
       </pre>
       <section data-dfn-for="ShapeBase" data-link-for="ShapeBase">
+        <p>Basic shapes properties are <dfn>id</dfn> and <dfn>lenient</dfn>.</p>
+        <p>
+          <a>lenient</a> property sets non-strict matching mode for shape.
+          See <a data-lt='RamOperations.frame()'>frame()</a> for matching mode description.
+        </p>
         <pre class="idl">
           typedef (NamedNode or BlankNode) ShapeID;
           interface ShapeBase {
             readonly attribute ShapeID id;
+            readonly attribute boolean? lenient;
           };
         </pre>
       </section>
@@ -155,9 +161,9 @@
         <p>
           <a>ObjectShape</a> describes a product type of heterogeneous types accessible through
           named properties. Both <dfn>typeProperties</dfn> and <dfn>properties</dfn> define
-          properties for a shape and the difference is when a candidate node must match given
+          properties for a shape and the difference is when a candidate term must match given
           object shape if and only if all <a>typeProperties</a> matches, which allows to
-          quickly filter a set of candidate nodes by scanning only against <a>typeProperties</a>.
+          quickly filter a set of candidate terms by scanning only against <a>typeProperties</a>.
         </p>
         <pre class="idl">
         interface ObjectShape : ShapeBase {
@@ -173,7 +179,7 @@
         <p>
           <a>UnionShape</a> describes a sum (coproduct) type of several types.
           The <dfn>variants</dfn> are unordered, which means matching operations
-          may produce results in arbitrary order when the same candidate node
+          may produce results in arbitrary order when the same candidate term
           matches multiple variant types.
         </p>
         <pre class="idl">
@@ -316,7 +322,7 @@
       <section data-dfn-for="ShapeReference" data-link-for="ShapeReference">
         <h3><dfn>ShapeReference</dfn> interface</h3>
         <p>
-          <a>ShapeReference</a> describes a reference to RDF candidate matched by
+          <a>ShapeReference</a> describes a reference to a candidate term matched by
           <dfn>target</dfn> <a>Shape</a>.
           A reference may target whole <a>Term</a> value or a specific <dfn>part</dfn> such as
           language or datatype of a <a>Literal</a>.
@@ -375,6 +381,29 @@
           Returns: <code class="idl">sequence&lt;unknown&gt;</code> &mdash; all found matches
           where each one is an instance of <a>rootShape</a>.
         </p>
+        <section>
+          <h4>Frame matching mode</h4>
+          <p>
+            The matching for each shape may operate in either <code>strict</code> or
+            <code>lenient</code> mode. The mode initializes as <code>lenient</code> and propagates
+            downwards from <a>rootShape</a>, changing at these points:
+            <ul>
+              <li>
+                If <a>ObjectShape</a> has <a data-lt="ObjectShape.typeProperties">typeProperties</a>
+                then the mode switches to <code>strict</code> when matching other
+                <a data-lt="ObjectShape.properties">properties</a>.
+              </li>
+              <li>
+                If a shape set <a data-lt="ShapeBase.lenient">lenient</a> property to
+                <code class="idl">true</code> then the mode switches to <code>lenient</code>
+                starting from that shape.
+              </li>
+            </ul>
+            In <code>strict</code> mode a non-matching candidate term will be considered an error
+            which is reported to the caller. In <code>lenient</code> mode non-matching candidate
+            terms are ignored and produce no matches for given shape.
+          </p>
+        </section>
       </section>
       <section data-dfn-for="FlattenParams" data-link-for="FlattenParams">
         <h3><dfn data-lt="RamOperations.flatten()">flatten()</dfn> operation</h3>

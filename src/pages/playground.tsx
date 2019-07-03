@@ -168,6 +168,7 @@ function PlaygroundPage() {
           <option value='none'>None</option>
           <option value='selectors'>Selectors with union and list</option>
           <option value='wikidata'>Wikidata: Alexander III of Russia</option>
+          <option value='iiif'>IIIF Presentation Context v2</option>
         </Form.Control>
         <div className={styles.panes}>
           <div className={styles.shapesPane}>
@@ -256,9 +257,9 @@ function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ram
 
 function toJson(match: unknown): string {
   return JSON.stringify(match, (key, value) => {
-    if (typeof value === 'object' && value !== null && 'termType' in value) {
-      return Ram.Rdf.toString(value as Ram.Rdf.Term);
-    }
+    // if (typeof value === 'object' && value !== null && 'termType' in value) {
+    //   return Ram.Rdf.toString(value as Ram.Rdf.Term);
+    // }
     return value;
   }, 2);
 }
