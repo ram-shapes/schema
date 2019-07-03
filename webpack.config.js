@@ -80,11 +80,5 @@ module.exports = {
       template: 'src/pages/template.hbs',
       filename: 'playground.html',
     }),
-    new HtmlWebpackPlugin({
-      title: 'RAM shapes - Playground',
-      chunks: [],
-      template: 'src/pages/spec.hbs',
-      filename: 'spec.html',
-    }),
   ]
 };

@@ -17,7 +17,7 @@ function getPageName(page: AppPage): string {
     case AppPage.Home:
       return '';
     case AppPage.Spec:
-      return 'spec.html';
+      return 'ram-shapes-spec/';
     case AppPage.Playground:
       return 'playground.html';
   }
