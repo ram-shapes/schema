@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
       {
         // loader for Bootstrap CSS
         test: /\.css$/,
-        include: /node_modules/,
+        include: path.resolve(__dirname, 'node_modules'),
         use: [
           {loader: 'style-loader'},
           {loader: 'css-loader'},
@@ -29,7 +30,7 @@ module.exports = {
       {
         // CSS modules for this app
         test: /\.css$/,
-        exclude: /node_modules/,
+        exclude: path.resolve(__dirname, 'node_modules'),
         use: [
           {loader: 'style-loader'},
           {
@@ -47,7 +48,7 @@ module.exports = {
         // generate .d.ts files for CSS modules
         enforce: 'pre',
         test: /\.css$/,
-        exclude: /node_modules/,
+        exclude: path.resolve(__dirname, 'node_modules'),
         use: [
           {loader: 'typed-css-modules-loader'},
         ],
