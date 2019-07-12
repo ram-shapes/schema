@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = (env = {}) => ({
   entry: {
     index: './src/pages/home.tsx',
     playground: './src/pages/playground.tsx',
@@ -50,7 +50,12 @@ module.exports = {
         test: /\.css$/,
         exclude: path.resolve(__dirname, 'node_modules'),
         use: [
-          {loader: 'typed-css-modules-loader'},
+          {
+            loader: 'typed-css-modules-loader',
+            options: {
+              noEmit: true,
+            }
+          },
         ],
       },
       {
@@ -72,14 +77,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'RAM shapes - Home',
       chunks: ['index'],
-      template: 'src/pages/template.hbs',
+      template: 'src/pages/template.ejs',
       filename: 'index.html',
+      env,
     }),
     new HtmlWebpackPlugin({
       title: 'RAM shapes - Playground',
       chunks: ['playground'],
-      template: 'src/pages/template.hbs',
+      template: 'src/pages/template.ejs',
       filename: 'playground.html',
+      env,
     }),
-  ]
-};
+  ],
+  performance: {
+    maxEntrypointSize: 5 * 1024 * 1024,
+    maxAssetSize: 5 * 1024 * 1024,
+  }
+});
