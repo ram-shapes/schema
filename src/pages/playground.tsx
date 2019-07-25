@@ -1,6 +1,5 @@
-import React from 'react';
-import { useRef, useState, useEffect } from 'react';
-import { Alert, Tabs, Tab, Button, Form } from 'react-bootstrap';
+import React, { useRef, useState } from 'react';
+import { Alert, Button, Form } from 'react-bootstrap';
 import * as Ramp from 'ramp-shapes';
 import * as N3 from 'n3';
 import * as SparqlJs from 'sparqljs';
@@ -9,6 +8,7 @@ import { renderApp } from '../core/common';
 import { AppPage } from '../core/routing';
 import { AppNavbar } from '../components/navbar';
 import { CodeEditor } from '../components/code-editor';
+import { PanelSystem } from '../components/panel-system';
 import { Example, ExampleName, getBundledExample } from '../examples';
 
 import * as styles from './playground.css';
@@ -170,75 +170,151 @@ function PlaygroundPage() {
           <option value='wikidata'>Wikidata: Alexander III of Russia</option>
           <option value='iiif'>IIIF Presentation Context v2</option>
         </Form.Control>
-        <div className={styles.panes}>
-          <div className={styles.shapesPane}>
-            <h4>Shapes:</h4>
-            <CodeEditor ref={shapesEditorRef}
-              className={styles.shapesEditor}
-              defaultValue={example.shapes}
-              language='turtle'
-            />
-          </div>
-          <div className={styles.operationTabs}>
-            <Tabs defaultActiveKey='frame' id='operation-tabs'>
-              <Tab eventKey='frame' className={styles.twoPaneOperation} title='Frame'>
-                <CodeEditor ref={graphEditorRef}
-                  className={styles.twoPaneEditor}
-                  defaultValue={example.graph}
-                  language='turtle'
-                />
-                <div className={styles.paneControls}>
-                  <Button onClick={onFrame}>Frame 🠛</Button>
-                </div>
-                <CodeEditor className={styles.twoPaneEditor}
-                  defaultValue={frameResult}
-                  language='json'
-                  readOnly={true}
-                />
-              </Tab>
-              <Tab eventKey='flatten' className={styles.twoPaneOperation} title='Flatten'>
-                <CodeEditor ref={jsonEditorRef}
-                  className={styles.twoPaneEditor}
-                  defaultValue={example.framed}
-                  language='json'
-                />
-                <div className={styles.paneControls}>
-                  <Button onClick={onFlatten}>Flatten 🠛</Button>
-                </div>
-                <CodeEditor className={styles.twoPaneEditor}
-                  defaultValue={flattenResult}
-                  language='turtle'
-                  readOnly={true}
-                />
-              </Tab>
-              <Tab eventKey='generateQuery'
-                className={styles.singlePaneOperation}
-                title='Generate Query'>
-                <Button className={styles.generateQueryButton}
-                  onClick={onGenerateQuery}>
-                  Generate CONSTRUCT query 🠛
-                </Button>
-                <CodeEditor className={styles.twoPaneEditor}
-                  defaultValue={generateQueryResult}
-                  language='sparql'
-                  readOnly={true}
-                />
-              </Tab>
-            </Tabs>
-          </div>
-        </div>
-        <div className={styles.infoBox}>
-          {errors.length > 0 ? (
-            <Alert variant='danger'
-              className={styles.infoBox}
-              onClose={() => setErrors([])}
-              dismissible={true}>
-              <ul className={styles.errorList}>
-                {errors.map((error, i) => <li key={i} className={styles.errorMessage}>{error}</li>)}
-              </ul>
-            </Alert>
-          ) : null}
-        </div>
+        <PanelSystem className={styles.panes}
+          settings={{showPopoutIcon: false}}
+          layout={{
+            type: 'row',
+            content: [
+              {
+                type: 'component',
+                key: 'shapes-editor',
+                title: 'Shapes (Turtle)',
+                closable: false,
+                element: (
+                  <CodeEditor ref={shapesEditorRef}
+                    className={styles.shapesEditor}
+                    defaultValue={example.shapes}
+                    language='turtle'
+                  />
+                )
+              },
+              {
+                type: 'column',
+                content: [
+                  {
+                    type: 'stack',
+                    content: [
+                      {
+                        type: 'component',
+                        key: 'graph-editor',
+                        title: 'Input graph (Turle)',
+                        closable: false,
+                        element: (
+                          <div className={styles.paneWithToolbar}>
+                            <div className={styles.paneControls}>
+                              <Button size='sm'
+                                variant='outline-primary'
+                                onClick={onFrame}>
+                                Frame&nbsp;▶
+                              </Button>
+                            </div>
+                            <CodeEditor ref={graphEditorRef}
+                              className={styles.twoPaneEditor}
+                              defaultValue={example.graph}
+                              language='turtle'
+                            />
+                          </div>
+                        )
+                      },
+                      {
+                        type: 'component',
+                        key: 'json-editor',
+                        title: 'Input value (JSON)',
+                        closable: false,
+                        element: (
+                          <div className={styles.paneWithToolbar}>
+                            <div className={styles.paneControls}>
+                              <Button size='sm'
+                                variant='outline-primary'
+                                onClick={onFlatten}>
+                                Flatten&nbsp;▶
+                              </Button>
+                            </div>
+                            <CodeEditor ref={jsonEditorRef}
+                              className={styles.twoPaneEditor}
+                              defaultValue={example.framed}
+                              language='json'
+                            />
+                          </div>
+                        )
+                      },
+                      {
+                        type: 'component',
+                        key: 'generate-query',
+                        title: 'Generate Query',
+                        closable: false,
+                        element: (
+                          <div className={styles.paneWithToolbar}>
+                            <div className={styles.paneControls}>
+                              <Button size='sm'
+                                variant='outline-primary'
+                                onClick={onGenerateQuery}>
+                                Generate CONSTRUCT query&nbsp;▶
+                              </Button>
+                            </div>
+                            <CodeEditor className={styles.twoPaneEditor}
+                              defaultValue={generateQueryResult}
+                              language='sparql'
+                              readOnly={true}
+                            />
+                          </div>
+                        )
+                      },
+                    ]
+                  },
+                  {
+                    type: 'stack',
+                    content: [
+                      {
+                        type: 'component',
+                        key: 'frame-result',
+                        title: 'Result: Frame (JSON)',
+                        element: (
+                          <CodeEditor className={styles.twoPaneEditor}
+                            defaultValue={frameResult}
+                            language='json'
+                            readOnly={true}
+                          />
+                        )
+                      },
+                      {
+                        type: 'component',
+                        key: 'flatten-result',
+                        title: 'Result: Flatten (Turtle)',
+                        element: (
+                          <CodeEditor className={styles.twoPaneEditor}
+                            defaultValue={flattenResult}
+                            language='turtle'
+                            readOnly={true}
+                          />
+                        )
+                      },
+                      {
+                        type: 'component',
+                        key: 'errors',
+                        title: 'Errors',
+                        element: (
+                          <div className={styles.infoBox}>
+                            {errors.length > 0 ? (
+                              <Alert variant='danger'
+                                className={styles.infoBox}
+                                onClose={() => setErrors([])}
+                                dismissible={true}>
+                                <ul className={styles.errorList}>
+                                  {errors.map((error, i) => <li key={i} className={styles.errorMessage}>{error}</li>)}
+                                </ul>
+                              </Alert>
+                            ) : null}
+                          </div>
+                        )
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }}>
+        </PanelSystem>
       </div>
     </>
   );

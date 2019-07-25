@@ -16,21 +16,20 @@
   margin: 15px 0;
 }
 
-.shapesPane {
-  flex: 1 1 40%;
-  display: flex;
-  flex-direction: column;
-  margin-right: 15px;
-}
-
-.operationTabs {
-  flex: 1 1 60%;
-  display: flex;
-  flex-direction: column;
-}
-.operationTabs > :global(.tab-content) {
+.paneWithToolbar {
   flex: auto;
   display: flex;
+  flex-direction: column;
+}
+
+.paneControls {
+  margin: 5px;
+  white-space: nowrap;
+}
+
+.twoPaneEditor {
+  flex: 1 1 0;
+  overflow: hidden;
 }
 
 .shapesEditor {
@@ -44,36 +43,4 @@
 
 .errorMessage {
   color: red;
-}
-
-:global(.tab-content) > .twoPaneOperation:global(.active) {
-  display: flex;
-}
-.twoPaneOperation {
-  flex: auto;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
-.twoPaneEditor {
-  flex: 1 1 0;
-  overflow: hidden;
-}
-
-.paneControls {
-  margin: 15px;
-  white-space: nowrap;
-}
-
-:global(.tab-content) > .singlePaneOperation:global(.active) {
-  display: flex;
-}
-.singlePaneOperation {
-  flex: auto;
-  flex-direction: column;
-}
-
-.generateQueryButton {
-  margin: 15px 0;
-  align-self: flex-start;
 }
