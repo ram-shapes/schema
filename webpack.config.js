@@ -38,7 +38,7 @@ module.exports = (env = {}) => ({
             options: {
               modules: {
                 mode: 'local',
-                localIdentName: 'ram-[name]__[local]--[hash:base64:5]',
+                localIdentName: 'ramp-[name]__[local]--[hash:base64:5]',
               }
             }
           },
@@ -75,14 +75,14 @@ module.exports = (env = {}) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'RAM shapes - Home',
+      title: 'RAMP shapes - Home',
       chunks: ['index'],
       template: 'src/pages/template.ejs',
       filename: 'index.html',
       env,
     }),
     new HtmlWebpackPlugin({
-      title: 'RAM shapes - Playground',
+      title: 'RAMP shapes - Playground',
       chunks: ['playground'],
       template: 'src/pages/template.ejs',
       filename: 'playground.html',

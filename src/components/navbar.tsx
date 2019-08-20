@@ -14,7 +14,7 @@ export interface AppNavbarProps {
 export function AppNavbar({page}: AppNavbarProps) {
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
-      <Navbar.Brand href='.'>RAM shapes</Navbar.Brand>
+      <Navbar.Brand href='.'>RAMP shapes</Navbar.Brand>
       <Nav className='mr-auto' activeKey={page}>
         <Nav.Link eventKey={AppPage.Home} href={getLinkHref(AppPage.Home, {base: '/'})}>Home</Nav.Link>
         <Nav.Link eventKey={AppPage.Spec} href={getLinkHref(AppPage.Spec, {base: '/'})}>Specification</Nav.Link>
@@ -23,7 +23,7 @@ export function AppNavbar({page}: AppNavbarProps) {
         </Nav.Link>
       </Nav>
       <Nav className='justify-content-end'>
-        <a href='https://github.com/AlexeyMz/ram-shapes'>
+        <a href='https://github.com/ramp-shapes/ramp-shapes'>
           <img className={styles.githubIcon}
             src={GITHUB_ICON} title='Link to GitHub' />
         </a>

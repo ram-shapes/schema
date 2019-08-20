@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { Alert, Tabs, Tab, Button, Form } from 'react-bootstrap';
-import * as Ram from 'ram-shapes';
+import * as Ramp from 'ramp-shapes';
 import * as N3 from 'n3';
 import * as SparqlJs from 'sparqljs';
 
@@ -49,14 +49,14 @@ function PlaygroundPage() {
 
   function tryParseShapes() {
     let shapesQuads: N3.Quad[];
-    let shapes: Ram.Shape[];
+    let shapes: Ramp.Shape[];
     let prefixes: { [prefix: string]: string } | undefined;
     try {
       const parser = new N3.Parser();
       shapesQuads = parser.parse(
         shapesEditorRef.current!.getEditor().getValue()
       );
-      shapes = Ram.frameShapes(Ram.Rdf.dataset(shapesQuads as Ram.Rdf.Quad[]));
+      shapes = Ramp.frameShapes(Ramp.Rdf.dataset(shapesQuads as Ramp.Rdf.Quad[]));
       // HACK: access prefixes parsed by N3
       if (typeof (parser as any)._prefixes === 'object') {
         prefixes = (parser as any)._prefixes;
@@ -76,11 +76,11 @@ function PlaygroundPage() {
   }
 
   function tryParseDataset() {
-    let dataset: Ram.Rdf.Dataset;
+    let dataset: Ramp.Rdf.Dataset;
     try {
-      dataset = Ram.Rdf.dataset(new N3.Parser().parse(
+      dataset = Ramp.Rdf.dataset(new N3.Parser().parse(
         graphEditorRef.current!.getEditor().getValue()
-      ) as Ram.Rdf.Quad[]);
+      ) as Ramp.Rdf.Quad[]);
     } catch (err) {
       addError('Failed to parse source graph:', err);
       return undefined;
@@ -109,12 +109,12 @@ function PlaygroundPage() {
 
     try {
       const {shapes, rootShape} = parsedShapes;
-      const results = Ram.frame({shapes, rootShape, dataset});
+      const results = Ramp.frame({shapes, rootShape, dataset});
       for (const {value} of results) {
         setFrameResult(toJson(value));
         return;
       }
-      addError(`Cannot find matches for root shape ${Ram.Rdf.toString(rootShape)}`);
+      addError(`Cannot find matches for root shape ${Ramp.Rdf.toString(rootShape)}`);
       setFrameResult('');
     } catch (err) {
       addError('Failed to frame:', err);
@@ -131,7 +131,7 @@ function PlaygroundPage() {
 
     try {
       const {shapes, rootShape, prefixes} = parsedShapes;
-      const quads = [...Ram.flatten({shapes, rootShape, value: json})];
+      const quads = [...Ramp.flatten({shapes, rootShape, value: json})];
       const quadsString = new N3.Writer({prefixes}).quadsToString(quads as N3.Quad[]);
       setFlattenResult(quadsString);
     } catch (err) {
@@ -148,7 +148,7 @@ function PlaygroundPage() {
 
     try {
       const {shapes, rootShape, prefixes} = parsedShapes;
-      const sparqljsQuery = Ram.generateQuery({shapes, rootShape, prefixes});
+      const sparqljsQuery = Ramp.generateQuery({shapes, rootShape, prefixes});
       const queryString = new SparqlJs.Generator().stringify(sparqljsQuery);
       setGenerateQueryResult(queryString);
     } catch (err) {
@@ -244,7 +244,7 @@ function PlaygroundPage() {
   );
 }
 
-function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ram.Shape>): Ram.ShapeID | undefined {
+function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ramp.Shape>): Ramp.ShapeID | undefined {
   const shapeIds = new Set<string>();
   for (const shape of shapes) {
     shapeIds.add(shape.id.value);
@@ -252,13 +252,13 @@ function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ram
   const rootShapeQuad = quads.find(
     q => q.subject.termType === 'NamedNode' && shapeIds.has(q.subject.value)
   );
-  return rootShapeQuad ? rootShapeQuad.subject as Ram.Rdf.NamedNode : undefined;
+  return rootShapeQuad ? rootShapeQuad.subject as Ramp.Rdf.NamedNode : undefined;
 }
 
 function toJson(match: unknown): string {
   return JSON.stringify(match, (key, value) => {
     // if (typeof value === 'object' && value !== null && 'termType' in value) {
-    //   return Ram.Rdf.toString(value as Ram.Rdf.Term);
+    //   return Ramp.Rdf.toString(value as Ramp.Rdf.Term);
     // }
     return value;
   }, 2);

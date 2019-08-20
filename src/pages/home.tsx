@@ -13,13 +13,13 @@ function HomePage() {
       <AppNavbar page={AppPage.Home} />
       <div className={styles.pageContent}>
         <Jumbotron className={styles.jumbotron}>
-          <h1>RAM shapes: declarative RDF ↔ ADT mapping</h1>
+          <h1>RAMP shapes: declarative RDF ↔ algebraic data type mapping</h1>
           <p className={styles.descriptionText}>
-            RAM (RDF ADT Mapping) is a type construction language, specification and an
+            RAMP (RDF ADT Mapping) is a type construction language, specification and an
             implementation of mapping operations between RDF graphs and structured data types.
           </p>
           <p className={styles.descriptionText}>
-            RAM is based on algebraic data types, and aims to overcome limitations of existing
+            RAMP is based on algebraic data types, and aims to overcome limitations of existing
             approaches by providing a convinient and efficient means to perform semantic
             data workflow, which includes querying a subset of the data, mapping the data into
             statically described data structures
