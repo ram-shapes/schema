@@ -25,7 +25,11 @@ function HomePage() {
             statically described data structures
           </p>
           <p>
-            <Button variant='primary'
+            <a className='btn btn-primary' role='button'
+              href='https://www.researchgate.net/publication/337724413_RAMP_Shapes_Declarative_RDF_ADT_Mapping'>
+              Read paper
+            </a>
+            <Button variant='outline-info'
               className={styles.goButton}
               href={getLinkHref(AppPage.Spec, {base: '/'})}>
               Read specification draft
