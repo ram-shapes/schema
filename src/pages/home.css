@@ -4,6 +4,13 @@
 
 .jumbotron {
   margin: 30px;
+  display: flex;
+}
+
+.logo {
+  height: 250px;
+  margin-right: 20px;
+  background: white;
 }
 
 .descriptionText {

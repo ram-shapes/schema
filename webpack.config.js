@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const FAVICON = './src/assets/logo/logo_favicon.png';
+
 module.exports = (env = {}) => ({
   entry: {
     index: './src/pages/home.tsx',
@@ -78,6 +80,7 @@ module.exports = (env = {}) => ({
       title: 'RAMP shapes - Home',
       chunks: ['index'],
       template: 'src/pages/template.ejs',
+      favicon: FAVICON,
       filename: 'index.html',
       env,
     }),
@@ -85,6 +88,7 @@ module.exports = (env = {}) => ({
       title: 'RAMP shapes - Playground',
       chunks: ['playground'],
       template: 'src/pages/template.ejs',
+      favicon: FAVICON,
       filename: 'playground.html',
       env,
     }),
