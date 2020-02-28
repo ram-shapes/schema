@@ -21,7 +21,13 @@ wd:Q5 a :ObjectShape;
     :typeProperty [
         :name "type";
         :path ([ :predicate wdt:P31 ]);
-        :shape [ a :ResourceShape; :termValue wd:Q5 ]
+        :shape [
+            a :ResourceShape;
+            :termValue wd:Q5;
+            :vocabulary [
+                :vocabItem [ :vocabKey "human"; :termValue wd:Q5 ]
+            ]
+        ]
     ];
     :property [
         :name "iri";

@@ -108,13 +108,13 @@ function PlaygroundPage() {
     }
 
     try {
-      const {shapes, rootShape} = parsedShapes;
-      const results = Ramp.frame({shapes, rootShape, dataset});
+      const {rootShape} = parsedShapes;
+      const results = Ramp.frame({shape: rootShape, dataset});
       for (const {value} of results) {
         setFrameResult(toJson(value));
         return;
       }
-      addError(`Cannot find matches for root shape ${Ramp.Rdf.toString(rootShape)}`);
+      addError(`Cannot find matches for root shape ${Ramp.Rdf.toString(rootShape.id)}`);
       setFrameResult('');
     } catch (err) {
       addError('Failed to frame:', err);
@@ -130,8 +130,8 @@ function PlaygroundPage() {
     }
 
     try {
-      const {shapes, rootShape, prefixes} = parsedShapes;
-      const quads = [...Ramp.flatten({shapes, rootShape, value: json})];
+      const {rootShape, prefixes} = parsedShapes;
+      const quads = [...Ramp.flatten({shape: rootShape, value: json})];
       const quadsString = new N3.Writer({prefixes}).quadsToString(quads as N3.Quad[]);
       setFlattenResult(quadsString);
     } catch (err) {
@@ -147,8 +147,8 @@ function PlaygroundPage() {
     }
 
     try {
-      const {shapes, rootShape, prefixes} = parsedShapes;
-      const sparqljsQuery = Ramp.generateQuery({shapes, rootShape, prefixes});
+      const {rootShape, prefixes} = parsedShapes;
+      const sparqljsQuery = Ramp.generateQuery({shape: rootShape, prefixes});
       const queryString = new SparqlJs.Generator().stringify(sparqljsQuery);
       setGenerateQueryResult(queryString);
     } catch (err) {
@@ -244,7 +244,7 @@ function PlaygroundPage() {
   );
 }
 
-function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ramp.Shape>): Ramp.ShapeID | undefined {
+function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ramp.Shape>): Ramp.Shape | undefined {
   const shapeIds = new Set<string>();
   for (const shape of shapes) {
     shapeIds.add(shape.id.value);
@@ -252,7 +252,10 @@ function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ram
   const rootShapeQuad = quads.find(
     q => q.subject.termType === 'NamedNode' && shapeIds.has(q.subject.value)
   );
-  return rootShapeQuad ? rootShapeQuad.subject as Ramp.Rdf.NamedNode : undefined;
+  if (!rootShapeQuad) {
+    return undefined;
+  }
+  return shapes.find(s => Ramp.Rdf.equalTerms(s.id, rootShapeQuad.subject));
 }
 
 function toJson(match: unknown): string {
