@@ -1,5 +1,9 @@
-export const pageContent: string;
-export const jumbotron: string;
-export const logo: string;
-export const descriptionText: string;
-export const goButton: string;
+declare const styles: {
+  readonly "pageContent": string;
+  readonly "jumbotron": string;
+  readonly "logo": string;
+  readonly "descriptionText": string;
+  readonly "goButton": string;
+};
+export = styles;
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, Tabs, Tab, Button, Form } from 'react-bootstrap';
 import * as Ramp from 'ramp-shapes';
 import * as N3 from 'n3';
@@ -14,7 +14,7 @@ import { Example, ExampleName, getBundledExample } from '../examples';
 import * as styles from './playground.css';
 
 const DEFAULT_EXAMPLE = 'selectors';
-const FRAME_RESULT_PLACEHLDER = '{ _: "Press \'Frame\' to perform frame() on specified graph" }';
+const FRAME_RESULT_PLACEHOLDER = '{ _: "Press \'Frame\' to perform frame() on specified graph" }';
 const FLATTEN_RESULT_PLACEHOLDER = '_:b _:p "Press \'Flatten\' to perform flatten() on specified JSON"';
 const GENERATE_QUERY_RESULT_PLACEHOLDER =
   '# Press "Generate CONSTRUCT query" to generate query for specified shapes';
@@ -26,7 +26,7 @@ function PlaygroundPage() {
 
   const [example, setExample] = useState(getBundledExample(DEFAULT_EXAMPLE));
   const [errors, setErrors] = useState<ReadonlyArray<string>>([]);
-  const [frameResult, setFrameResult] = useState(FRAME_RESULT_PLACEHLDER);
+  const [frameResult, setFrameResult] = useState(FRAME_RESULT_PLACEHOLDER);
   const [flattenResult, setFlattenResult] = useState(FLATTEN_RESULT_PLACEHOLDER);
   const [generateQueryResult, setGenerateQueryResult] = useState(GENERATE_QUERY_RESULT_PLACEHOLDER);
 
@@ -42,20 +42,20 @@ function PlaygroundPage() {
   function onChangeExample(exampleName: ExampleName = 'none') {
     const example = getBundledExample(exampleName);
     setExample(example);
-    setFrameResult(FRAME_RESULT_PLACEHLDER);
+    setFrameResult(FRAME_RESULT_PLACEHOLDER);
     setFlattenResult(FLATTEN_RESULT_PLACEHOLDER);
     setGenerateQueryResult(GENERATE_QUERY_RESULT_PLACEHOLDER);
   }
 
   function tryParseShapes() {
-    let shapesQuads: N3.Quad[];
+    let shapesQuads: Ramp.Rdf.Quad[];
     let shapes: Ramp.Shape[];
     let prefixes: { [prefix: string]: string } | undefined;
     try {
       const parser = new N3.Parser();
       shapesQuads = parser.parse(
         shapesEditorRef.current!.getEditor().getValue()
-      );
+      ) as Ramp.Rdf.Quad[];
       shapes = Ramp.frameShapes(Ramp.Rdf.dataset(shapesQuads as Ramp.Rdf.Quad[]));
       // HACK: access prefixes parsed by N3
       if (typeof (parser as any)._prefixes === 'object') {
@@ -244,7 +244,10 @@ function PlaygroundPage() {
   );
 }
 
-function findFirstShape(quads: ReadonlyArray<N3.Quad>, shapes: ReadonlyArray<Ramp.Shape>): Ramp.Shape | undefined {
+function findFirstShape(
+  quads: ReadonlyArray<Ramp.Rdf.Quad>,
+  shapes: ReadonlyArray<Ramp.Shape>
+): Ramp.Shape | undefined {
   const shapeIds = new Set<string>();
   for (const shape of shapes) {
     shapeIds.add(shape.id.value);

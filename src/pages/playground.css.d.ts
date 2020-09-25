@@ -1,14 +1,18 @@
-export const pageContent: string;
-export const exampleSelector: string;
-export const panes: string;
-export const shapesPane: string;
-export const operationTabs: string;
-export const shapesEditor: string;
-export const infoBox: string;
-export const errorList: string;
-export const errorMessage: string;
-export const twoPaneOperation: string;
-export const twoPaneEditor: string;
-export const paneControls: string;
-export const singlePaneOperation: string;
-export const generateQueryButton: string;
+declare const styles: {
+  readonly "pageContent": string;
+  readonly "exampleSelector": string;
+  readonly "panes": string;
+  readonly "shapesPane": string;
+  readonly "operationTabs": string;
+  readonly "shapesEditor": string;
+  readonly "infoBox": string;
+  readonly "errorList": string;
+  readonly "errorMessage": string;
+  readonly "twoPaneOperation": string;
+  readonly "twoPaneEditor": string;
+  readonly "paneControls": string;
+  readonly "singlePaneOperation": string;
+  readonly "generateQueryButton": string;
+};
+export = styles;
+
