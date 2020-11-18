@@ -9,6 +9,7 @@ import { renderApp } from '../core/common';
 import { AppPage } from '../core/routing';
 import { AppNavbar } from '../components/navbar';
 import { CodeEditor } from '../components/code-editor';
+import { quadsToTurtleString } from '../util/turtle-blank';
 import { Example, ExampleName, getBundledExample } from '../examples';
 
 import * as styles from './playground.css';
@@ -50,7 +51,7 @@ function PlaygroundPage() {
   function tryParseShapes() {
     let shapesQuads: Ramp.Rdf.Quad[];
     let shapes: Ramp.Shape[];
-    let prefixes: { [prefix: string]: string } | undefined;
+    let prefixes: { [prefix: string]: string } = {};
     try {
       const parser = new N3.Parser();
       shapesQuads = parser.parse(
@@ -121,7 +122,7 @@ function PlaygroundPage() {
     }
   }
 
-  function onFlatten() {
+  async function onFlatten() {
     setErrors([]);
     const parsedShapes = tryParseShapes();
     const json = tryParseJson();
@@ -131,8 +132,8 @@ function PlaygroundPage() {
 
     try {
       const {rootShape, prefixes} = parsedShapes;
-      const quads = [...Ramp.flatten({shape: rootShape, value: json})];
-      const quadsString = new N3.Writer({prefixes}).quadsToString(quads as N3.Quad[]);
+      const quads = Array.from(Ramp.flatten({shape: rootShape, value: json}));
+      const quadsString = await quadsToTurtleString(quads, prefixes);
       setFlattenResult(quadsString);
     } catch (err) {
       addError('Failed to flatten:', err);
