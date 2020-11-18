@@ -21,7 +21,7 @@ module.exports = (env = {}) => ({
     rules: [
       {test: /\.tsx?$/, use: 'ts-loader'},
       {
-        // loader for Bootstrap CSS
+        // loader for CSS from libraries (node_modules)
         test: /\.css$/,
         include: path.resolve(__dirname, 'node_modules'),
         use: [
@@ -61,11 +61,11 @@ module.exports = (env = {}) => ({
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|ttf)$/,
         use: {
           loader: 'file-loader',
           options: {
-            name: 'images/[name]-[hash].[ext]',
+            name: 'assets/[name]-[hash].[ext]',
           },
         },
       },
