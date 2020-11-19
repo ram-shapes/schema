@@ -1,5 +1,4 @@
 import React from 'react';
-import { Jumbotron, Button } from 'react-bootstrap';
 
 import { renderApp } from '../core/common';
 import { AppPage, getLinkHref } from '../core/routing';
@@ -14,7 +13,7 @@ function HomePage() {
     <>
       <AppNavbar page={AppPage.Home} />
       <div className={styles.pageContent}>
-        <Jumbotron className={styles.jumbotron}>
+        <div className={styles.jumbotron}>
           <div>
             <img className={styles.logo} src={RAMP_LOGO} />
           </div>
@@ -35,19 +34,17 @@ function HomePage() {
                 href='https://www.researchgate.net/publication/337724413_RAMP_Shapes_Declarative_RDF_ADT_Mapping'>
                 Read paper
               </a>
-              <Button variant='outline-info'
-                className={styles.goButton}
+              <a className={`btn btn-outline-info ${styles.goButton}`} role='button'
                 href={getLinkHref(AppPage.Spec, {base: '/'})}>
                 Read specification draft
-              </Button>
-              <Button variant='outline-info'
-                className={styles.goButton}
+              </a>
+              <a className={`btn btn-outline-info ${styles.goButton}`} role='button'
                 href={getLinkHref(AppPage.Playground, {base: '/'})}>
                 Try out on Playground
-              </Button>
+              </a>
             </p>
           </div>
-        </Jumbotron>
+        </div>
       </div>
     </>
   );

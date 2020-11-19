@@ -6,6 +6,7 @@
 }
 
 .exampleSelector {
+  margin-left: 10px;
   width: 300px;
 }
 
@@ -28,10 +29,6 @@
   display: flex;
   flex-direction: column;
 }
-.operationTabs > :global(.tab-content) {
-  flex: auto;
-  display: flex;
-}
 
 .shapesEditor {
   flex: 1 1 0;
@@ -44,14 +41,11 @@
 
 .errorMessage {
   color: #8e0000;
-  white-space: pre;
+  white-space: break-spaces;
   font-family: monospace;
   font-size: 16px;
 }
 
-:global(.tab-content) > .twoPaneOperation:global(.active) {
-  display: flex;
-}
 .twoPaneOperation {
   flex: auto;
   flex-direction: column;
@@ -68,9 +62,6 @@
   white-space: nowrap;
 }
 
-:global(.tab-content) > .singlePaneOperation:global(.active) {
-  display: flex;
-}
 .singlePaneOperation {
   flex: auto;
   flex-direction: column;

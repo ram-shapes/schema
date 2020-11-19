@@ -1,14 +1,15 @@
 import React from 'react';
 import { useRef, useState } from 'react';
-import { Alert, Tabs, Tab, Button, Form } from 'react-bootstrap';
 import * as Ramp from 'ramp-shapes';
 import * as N3 from 'n3';
 import * as SparqlJs from 'sparqljs';
 
 import { renderApp } from '../core/common';
 import { AppPage } from '../core/routing';
-import { AppNavbar } from '../components/navbar';
+import { Alert } from '../components/alert';
 import { CodeEditor } from '../components/code-editor';
+import { AppNavbar } from '../components/navbar';
+import { Tabs, Tab } from '../components/tabs';
 import { quadsToTurtleString } from '../util/turtle-blank';
 import { Example, ExampleName, getBundledExample } from '../examples';
 
@@ -161,16 +162,17 @@ function PlaygroundPage() {
     <>
       <AppNavbar page={AppPage.Playground} />
       <div className={styles.pageContent}>
-        <h4>Load example:</h4>
-        <Form.Control as='select'
-          className={styles.exampleSelector}
-          defaultValue={DEFAULT_EXAMPLE}
-          onChange={e => onChangeExample(e.currentTarget.value as ExampleName)}>
-          <option value='none'>None</option>
-          <option value='selectors'>Selectors with union and list</option>
-          <option value='wikidata'>Wikidata: Alexander III of Russia</option>
-          <option value='iiif'>IIIF Presentation Context v2</option>
-        </Form.Control>
+        <label>
+          Load example:
+          <select className={styles.exampleSelector}
+            defaultValue={DEFAULT_EXAMPLE}
+            onChange={e => onChangeExample(e.currentTarget.value as ExampleName)}>
+            <option value='none'>None</option>
+            <option value='selectors'>Selectors with union and list</option>
+            <option value='wikidata'>Wikidata: Alexander III of Russia</option>
+            <option value='iiif'>IIIF Presentation Context v2</option>
+          </select>
+        </label>
         <div className={styles.panes}>
           <div className={styles.shapesPane}>
             <h4>Shapes:</h4>
@@ -181,15 +183,15 @@ function PlaygroundPage() {
             />
           </div>
           <div className={styles.operationTabs}>
-            <Tabs defaultActiveKey='frame' id='operation-tabs'>
-              <Tab eventKey='frame' className={styles.twoPaneOperation} title='Frame'>
+            <Tabs defaultActiveTab='frame'>
+              <Tab tabKey='frame' className={styles.twoPaneOperation} title='Frame'>
                 <CodeEditor ref={graphEditorRef}
                   className={styles.twoPaneEditor}
                   defaultValue={example.graph}
                   language='turtle'
                 />
                 <div className={styles.paneControls}>
-                  <Button onClick={onFrame}>Frame 🠛</Button>
+                  <button className='btn btn-primary' onClick={onFrame}>Frame 🠛</button>
                 </div>
                 <CodeEditor className={styles.twoPaneEditor}
                   defaultValue={frameResult}
@@ -197,14 +199,14 @@ function PlaygroundPage() {
                   readOnly={true}
                 />
               </Tab>
-              <Tab eventKey='flatten' className={styles.twoPaneOperation} title='Flatten'>
+              <Tab tabKey='flatten' className={styles.twoPaneOperation} title='Flatten'>
                 <CodeEditor ref={jsonEditorRef}
                   className={styles.twoPaneEditor}
                   defaultValue={example.framed}
                   language='json'
                 />
                 <div className={styles.paneControls}>
-                  <Button onClick={onFlatten}>Flatten 🠛</Button>
+                  <button className='btn btn-primary' onClick={onFlatten}>Flatten 🠛</button>
                 </div>
                 <CodeEditor className={styles.twoPaneEditor}
                   defaultValue={flattenResult}
@@ -212,13 +214,13 @@ function PlaygroundPage() {
                   readOnly={true}
                 />
               </Tab>
-              <Tab eventKey='generateQuery'
+              <Tab tabKey='generateQuery'
                 className={styles.singlePaneOperation}
                 title='Generate Query'>
-                <Button className={styles.generateQueryButton}
+                <button className={`btn btn-primary ${styles.generateQueryButton}`}
                   onClick={onGenerateQuery}>
                   Generate CONSTRUCT query 🠛
-                </Button>
+                </button>
                 <CodeEditor className={styles.twoPaneEditor}
                   defaultValue={generateQueryResult}
                   language='sparql'
@@ -230,10 +232,8 @@ function PlaygroundPage() {
         </div>
         <div className={styles.infoBox}>
           {errors.length > 0 ? (
-            <Alert variant='danger'
-              className={styles.infoBox}
-              onClose={() => setErrors([])}
-              dismissible={true}>
+            <Alert className={styles.infoBox}
+              onClose={() => setErrors([])}>
               <ul className={styles.errorList}>
                 {errors.map((error, i) => <li key={i} className={styles.errorMessage}>{error}</li>)}
               </ul>

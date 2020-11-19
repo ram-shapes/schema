@@ -1,5 +1,4 @@
 import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
 
 import { AppPage, getLinkHref } from '../core/routing';
 
@@ -12,22 +11,32 @@ export interface AppNavbarProps {
 }
 
 export function AppNavbar({page}: AppNavbarProps) {
+  const renderPageLink = (target: AppPage, title: string) => {
+    let className = styles.projectLink;
+    if (target === page) {
+      className += ` ${styles.activeProjectLink}`;
+    }
+    return (
+      <a className={className}
+        href={getLinkHref(target, {base: '/'})}>
+        {title}
+      </a>
+    );
+  };
   return (
-    <Navbar bg='dark' variant='dark' expand='lg'>
-      <Navbar.Brand href='.'>RAMP shapes</Navbar.Brand>
-      <Nav className='mr-auto' activeKey={page}>
-        <Nav.Link eventKey={AppPage.Home} href={getLinkHref(AppPage.Home, {base: '/'})}>Home</Nav.Link>
-        <Nav.Link eventKey={AppPage.Spec} href={getLinkHref(AppPage.Spec, {base: '/'})}>Specification</Nav.Link>
-        <Nav.Link eventKey={AppPage.Playground} href={getLinkHref(AppPage.Playground, {base: '/'})}>
-            Playground
-        </Nav.Link>
-      </Nav>
-      <Nav className='justify-content-end'>
+    <nav className={styles.navbar}>
+      <a className={styles.projectTitle} href='.'>RAMP shapes</a>
+      <div className={styles.projectLinks}>
+        {renderPageLink(AppPage.Home, 'Home')}
+        {renderPageLink(AppPage.Spec, 'Specification')}
+        {renderPageLink(AppPage.Playground, 'Playground')}
+      </div>
+      <div className={styles.sideLinks}>
         <a href='https://github.com/ramp-shapes/ramp-shapes'>
           <img className={styles.githubIcon}
             src={GITHUB_ICON} title='Link to GitHub' />
         </a>
-      </Nav>
-    </Navbar>
+      </div>
+    </nav>
   );
 }
