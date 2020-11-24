@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -8,84 +6,61 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="800"
-   height="800"
-   viewBox="0 0 211.66666 211.66667"
-   version="1.1"
-   id="svg8"
-   inkscape:version="0.92.1 r15371"
-   sodipodi:docname="logo_source.svg"
-   inkscape:export-filename="C:\Projects\ramp-shapes.github.io-source\src\assets\logo\logo_source.png"
+   inkscape:export-ydpi="96"
    inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-filename="C:\Projects\ramp-shapes.github.io-source\src\assets\logo\logo_source.png"
+   sodipodi:docname="logo_source.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 211.66666 211.66667"
+   height="800"
+   width="800">
   <defs
      id="defs2">
     <linearGradient
-       inkscape:collect="always"
-       id="linearGradient4550">
+       osb:paint="gradient"
+       id="linearGradient4497">
       <stop
-         style="stop-color:#578bff;stop-opacity:1;"
+         id="stop4493"
          offset="0"
-         id="stop4546" />
+         style="stop-color:#008000;stop-opacity:1;" />
       <stop
-         style="stop-color:#578bff;stop-opacity:0;"
+         id="stop4495"
          offset="1"
-         id="stop4548" />
+         style="stop-color:#008000;stop-opacity:0;" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
-       id="linearGradient4497"
-       osb:paint="gradient">
+       osb:paint="solid"
+       id="linearGradient4489">
       <stop
-         style="stop-color:#008000;stop-opacity:1;"
+         id="stop4487"
          offset="0"
-         id="stop4493" />
-      <stop
-         style="stop-color:#008000;stop-opacity:0;"
-         offset="1"
-         id="stop4495" />
+         style="stop-color:#000000;stop-opacity:1;" />
     </linearGradient>
-    <linearGradient
-       id="linearGradient4489"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop4487" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4550"
-       id="linearGradient4552"
-       x1="186.22147"
-       y1="235.40607"
-       x2="96.308334"
-       y2="257.31247"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0,-1.5875)" />
   </defs>
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="101.10165"
-     inkscape:cy="365.77215"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
      units="px"
-     inkscape:window-width="1536"
-     inkscape:window-height="801"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="313.71353"
+     inkscape:cx="509.69203"
+     inkscape:zoom="0.5"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -94,38 +69,38 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
+     transform="translate(0,-85.333317)"
      id="layer1"
-     transform="translate(0,-85.333317)">
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
     <rect
-       id="rect4485"
-       width="182.5625"
-       height="183.09167"
-       x="16.404167"
+       style="stroke:#578bff;fill:#578bff;fill-opacity:1;stroke-opacity:1;stroke-width:5.29166667;stroke-miterlimit:4;stroke-dasharray:none"
        y="100.14999"
-       style="stroke:#578bff;fill:none;fill-opacity:1;stroke-opacity:1;stroke-width:5.29166667;stroke-miterlimit:4;stroke-dasharray:none" />
+       x="16.404167"
+       height="183.09167"
+       width="182.5625"
+       id="rect4485" />
     <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:37.20598984px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93014973"
-       x="-56.099026"
-       y="245.54617"
+       transform="rotate(-24.777753)"
        id="text4505"
-       transform="rotate(-24.777753)"><tspan
-         sodipodi:role="line"
+       y="243.24634"
+       x="-57.510139"
+       style="font-style:normal;font-weight:normal;font-size:37.206px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.93015"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.608px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:0.93015"
+         y="243.24634"
+         x="-57.510139"
          id="tspan4503"
-         x="-56.099026"
-         y="245.54617"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.60798645px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#578bff;fill-opacity:1;stroke-width:0.93014973">RAMP</tspan></text>
+         sodipodi:role="line">RAMP</tspan></text>
     <path
-       style="fill:url(#linearGradient4552);fill-opacity:1;stroke:#578bff;stroke-width:5.29166651;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 29.633333,268.42498 H 184.15 v -70.90833 z"
+       inkscape:connector-curvature="0"
        id="path4507"
-       inkscape:connector-curvature="0" />
+       d="M 29.633333,268.42498 H 184.15 v -70.90833 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.29166651;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>

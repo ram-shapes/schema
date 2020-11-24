@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -8,83 +6,61 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="800"
-   height="800"
-   viewBox="0 0 211.66666 211.66667"
-   version="1.1"
-   id="svg8"
-   inkscape:version="0.92.1 r15371"
-   sodipodi:docname="logo_favicon_source.svg"
-   inkscape:export-filename="C:\Projects\ramp-shapes.github.io-source\src\assets\logo\logo_favicon.png"
+   inkscape:export-ydpi="24"
    inkscape:export-xdpi="24"
-   inkscape:export-ydpi="24">
+   inkscape:export-filename="C:\Projects\ramp-shapes.github.io-source\src\assets\logo\logo_favicon.png"
+   sodipodi:docname="logo_favicon_source.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 211.66666 211.66667"
+   height="800"
+   width="800">
   <defs
      id="defs2">
     <linearGradient
-       inkscape:collect="always"
-       id="linearGradient4550">
+       osb:paint="gradient"
+       id="linearGradient4497">
       <stop
-         style="stop-color:#578bff;stop-opacity:1;"
+         id="stop4493"
          offset="0"
-         id="stop4546" />
+         style="stop-color:#008000;stop-opacity:1;" />
       <stop
-         style="stop-color:#578bff;stop-opacity:0;"
+         id="stop4495"
          offset="1"
-         id="stop4548" />
+         style="stop-color:#008000;stop-opacity:0;" />
     </linearGradient>
     <linearGradient
-       id="linearGradient4497"
-       osb:paint="gradient">
+       osb:paint="solid"
+       id="linearGradient4489">
       <stop
-         style="stop-color:#008000;stop-opacity:1;"
+         id="stop4487"
          offset="0"
-         id="stop4493" />
-      <stop
-         style="stop-color:#008000;stop-opacity:0;"
-         offset="1"
-         id="stop4495" />
+         style="stop-color:#000000;stop-opacity:1;" />
     </linearGradient>
-    <linearGradient
-       id="linearGradient4489"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop4487" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4550"
-       id="linearGradient4552"
-       x1="186.22147"
-       y1="235.40607"
-       x2="96.308334"
-       y2="257.31247"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.99923417,0,0,0.99923417,-2.4793207,-6.4839443)" />
   </defs>
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.82"
-     inkscape:cx="80.10165"
-     inkscape:cy="365.77215"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
      inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
+     units="px"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="2494.2899"
+     inkscape:cx="2887.6537"
+     inkscape:zoom="0.14495689"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -93,33 +69,33 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
+     transform="translate(0,-85.333317)"
      id="layer1"
-     transform="translate(0,-85.333317)">
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
     <rect
-       id="rect4485-1"
-       width="200.78493"
-       height="201.36693"
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:11.6397047;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       y="91.103867"
        x="5.819869"
-       y="91.103867"
-       style="fill:#fff8f8;fill-opacity:1;stroke:none;stroke-width:11.6397047;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       id="rect4485"
+       height="201.36693"
        width="200.78493"
-       height="201.36691"
-       x="5.8198524"
+       id="rect4485-1" />
+    <rect
+       style="fill:#578bff;fill-opacity:1;stroke:#578bff;stroke-width:11.6397047;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        y="91.103867"
-       style="fill:none;fill-opacity:1;stroke:#578bff;stroke-width:11.6397047;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       x="5.8198524"
+       height="201.36691"
+       width="200.78493"
+       id="rect4485" />
     <path
-       style="fill:url(#linearGradient4552);fill-opacity:1;stroke:#578bff;stroke-width:10.57522869;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 27.131319,263.32176 H 181.52965 v -70.85402 z"
-       id="path4507"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:12.1365;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 14.224811,278.16423 H 193.1455 v -80.53389 z"
+       id="path4507-5"
        inkscape:connector-curvature="0" />
   </g>
 </svg>
