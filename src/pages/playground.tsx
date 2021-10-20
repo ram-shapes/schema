@@ -16,8 +16,10 @@ import { Example, ExampleName, getBundledExample } from '../examples';
 import * as styles from './playground.css';
 
 const DEFAULT_EXAMPLE = 'selectors';
-const FRAME_RESULT_PLACEHOLDER = '{ _: "Press \'Frame\' to perform frame() on specified graph" }';
-const FLATTEN_RESULT_PLACEHOLDER = '_:b _:p "Press \'Flatten\' to perform flatten() on specified JSON"';
+const FRAME_RESULT_PLACEHOLDER =
+  '{ _: "Press \'Frame\' to perform frame() on specified graph" }';
+const FLATTEN_RESULT_PLACEHOLDER =
+  '_:b _:p "Press \'Flatten\' to perform flatten() on specified JSON"';
 const GENERATE_QUERY_RESULT_PLACEHOLDER =
   '# Press "Generate CONSTRUCT query" to generate query for specified shapes';
 
@@ -58,13 +60,13 @@ function PlaygroundPage() {
       shapesQuads = parser.parse(
         shapesEditorRef.current!.getEditor().getValue()
       ) as Ramp.Rdf.Quad[];
-      shapes = Ramp.frameShapes(Ramp.Rdf.dataset(shapesQuads as Ramp.Rdf.Quad[]));
+      shapes = Ramp.frameShapes(Ramp.Rdf.dataset(shapesQuads));
       // HACK: access prefixes parsed by N3
       if (typeof (parser as any)._prefixes === 'object') {
         prefixes = (parser as any)._prefixes;
       }
     } catch (err) {
-      addError('Failed to parse shapes:', err);
+      addError('Failed to parse shapes:', err as Error);
       return undefined;
     }
 
@@ -84,7 +86,7 @@ function PlaygroundPage() {
         graphEditorRef.current!.getEditor().getValue()
       ) as Ramp.Rdf.Quad[]);
     } catch (err) {
-      addError('Failed to parse source graph:', err);
+      addError('Failed to parse source graph:', err as Error);
       return undefined;
     }
     return dataset;
@@ -95,7 +97,7 @@ function PlaygroundPage() {
     try {
       json = JSON.parse(jsonEditorRef.current!.getEditor().getValue());
     } catch (err) {
-      addError('Failed to parse source JSON:', err);
+      addError('Failed to parse source JSON:', err as Error);
       return undefined;
     }
     return json;
@@ -119,7 +121,7 @@ function PlaygroundPage() {
       addError(`Cannot find matches for root shape ${Ramp.Rdf.toString(rootShape.id)}`);
       setFrameResult('');
     } catch (err) {
-      addError('Failed to frame:', err);
+      addError('Failed to frame:', err as Error);
     }
   }
 
@@ -137,7 +139,7 @@ function PlaygroundPage() {
       const quadsString = await quadsToTurtleString(quads, prefixes);
       setFlattenResult(quadsString);
     } catch (err) {
-      addError('Failed to flatten:', err);
+      addError('Failed to flatten:', err as Error);
     }
   }
 
@@ -154,7 +156,7 @@ function PlaygroundPage() {
       const queryString = new SparqlJs.Generator().stringify(sparqljsQuery);
       setGenerateQueryResult(queryString);
     } catch (err) {
-      addError('Failed to generate query:', err);
+      addError('Failed to generate query:', err as Error);
     }
   }
 
