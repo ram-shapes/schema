@@ -27,19 +27,19 @@ EXAMPLES.set('none', {
 });
 
 EXAMPLES.set('selectors', {
-  shapes: require('./selectors.shapes.ttl').default,
-  graph: require('./selectors.graph.ttl').default,
+  shapes: require('./selectors.shapes.ttl'),
+  graph: require('./selectors.graph.ttl'),
   framed: stringifyFramed(require('./selectors.framed.json')),
 });
 
 EXAMPLES.set('wikidata', {
-  shapes: require('./wikidata.shapes.ttl').default,
-  graph: require('./wikidata.graph.ttl').default,
+  shapes: require('./wikidata.shapes.ttl'),
+  graph: require('./wikidata.graph.ttl'),
   framed: stringifyFramed(require('./wikidata.framed.json')),
 });
 
 EXAMPLES.set('iiif', {
-  shapes: require('./iiif.shapes.ttl').default,
-  graph: require('./iiif.graph.ttl').default,
+  shapes: require('./iiif.shapes.ttl'),
+  graph: require('./iiif.graph.ttl'),
   framed: stringifyFramed(require('./iiif.framed.json')),
 });

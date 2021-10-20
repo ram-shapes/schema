@@ -16,6 +16,9 @@ module.exports = (env = {}) => ({
   devtool: "source-map",
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    fallback: {
+      buffer: require.resolve('buffer/'),
+    },
   },
   module: {
     rules: [
@@ -40,6 +43,7 @@ module.exports = (env = {}) => ({
             options: {
               modules: {
                 mode: 'local',
+                namedExport: true,
                 localIdentName: 'ramp-[name]__[local]--[hash:base64:5]',
               }
             }
@@ -62,16 +66,11 @@ module.exports = (env = {}) => ({
       },
       {
         test: /\.(png|svg|jpg|gif|ttf)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'assets/[name]-[hash].[ext]',
-          },
-        },
+        type: 'asset/resource',
       },
       {
         test: /\.ttl$/,
-        use: {loader: 'raw-loader'}
+        type: 'asset/source',
       },
     ]
   },
