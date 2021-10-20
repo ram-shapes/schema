@@ -5,7 +5,7 @@ export enum AppPage {
 }
 
 export function getLinkHref(page: AppPage, options: {
-  base: string,
+  base: string;
 }): string {
   const {base} = options;
   const prefix = base.endsWith('/') ? base : (base + '/');

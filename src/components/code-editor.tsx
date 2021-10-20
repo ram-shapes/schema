@@ -13,7 +13,7 @@ export interface CodeEditorProps {
   readonly readOnly?: boolean;
 }
 
-export class CodeEditor extends React.Component<CodeEditorProps, {}> {
+export class CodeEditor extends React.Component<CodeEditorProps> {
   private container: HTMLElement | null = null;
   private editor: Monaco.editor.IStandaloneCodeEditor | undefined;
 
@@ -48,7 +48,7 @@ export class CodeEditor extends React.Component<CodeEditorProps, {}> {
     } else if (this.editor) {
       this.editor.dispose();
     }
-  }
+  };
 
   componentDidUpdate(prevProps: CodeEditorProps) {
     if (this.props.defaultValue !== prevProps.defaultValue) {

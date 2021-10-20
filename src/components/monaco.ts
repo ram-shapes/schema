@@ -1,5 +1,7 @@
-// Import only neccesary features, see here:
+// Import only necessary features, see here:
 // https://github.com/microsoft/monaco-editor-samples/blob/master/browser-esm-webpack-small/index.js
+
+/* eslint-disable max-len */
 
 // (1) Desired editor features:
 // BEGIN_FEATURES
@@ -130,6 +132,6 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
 // END_LANGUAGES
 
-// tslint:enable: max-line-length
+/* eslint-enable max-len */
 
 export * from 'monaco-editor/esm/vs/editor/editor.api.js';
